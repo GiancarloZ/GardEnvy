@@ -1,0 +1,174 @@
+app GardEnvy {
+  wasp: {
+    version: "^0.9.0"
+  },
+
+  title: "GardEnvy",
+
+  auth: {
+      userEntity: User,
+      externalAuthEntity: SocialLogin,
+      methods: {
+        google: {
+          configFn: import { config } from "@server/auth/google.js",
+          getUserFieldsFn: import { getUserFields } from "@server/auth/google.js"
+        },
+        usernameAndPassword: {}
+      },
+      onAuthFailedRedirectTo: "/login"
+  },
+
+  client: {
+    rootComponent: import Root from "@client/Root.jsx",
+    setupFn: import mySetupFunction from "@client/myClientSetupCode.js"
+  },
+
+  dependencies: [
+    ("prop-types", "15.7.2"),
+    ("@emotion-icons/fluentui-system-filled", "^3.15.0"),
+    ("@emotion-icons/fluentui-system-regular", "^3.15.0"),
+    ("@emotion-icons/ionicons-outline", "^3.14.0"),
+    ("@emotion-icons/ionicons-sharp", "^3.14.0"),
+    ("@emotion-icons/ionicons-solid", "^3.14.0"),
+    ("@emotion/react", "^11.10.6"),
+    ("@emotion/styled", "^11.10.6"),
+  ]
+}
+
+route RootRoute { path: "/", to: MainPage }
+page MainPage {
+  component: import Main from "@client/pages/Main/MainPage.jsx"
+}
+
+route SignupRoute { path: "/signup", to: SignupPage }
+page SignupPage {
+  component: import Signup from "@client/pages/Auth/SignupPage"
+}
+
+route LoginRoute { path: "/login", to: LoginPage }
+page LoginPage {
+  component: import Login from "@client/pages/Auth/LoginPage"
+}
+
+route GardensRoute { path: "/gardens", to: GardensPage }
+page GardensPage {
+  component: import Gardens from "@client/pages/Gardens/GardensPage"
+}
+
+route GardenRoute { path: "/garden", to: GardenPage }
+page GardenPage {
+  component: import Garden from "@client/pages/Gardens/GardenPage"
+}
+
+route MyGardensRoute { path: "/mygardens", to: MyGardensPage }
+page MyGardensPage {
+  authRequired: true,
+  component: import MyGarden from "@client/pages/Gardens/MyGardensPage"
+}
+
+// ----------------- Entities ------------------ //
+
+entity User {=psl
+    id                Int        @id @default(autoincrement())
+    username          String     @unique
+    email             String?    @unique
+    password          String
+    firstName         String?
+    lastName          String?
+    bio               String?
+    profilePictureUrl String?
+    role              String     @default("USER")
+    createdAt         DateTime   @default(now())
+    updatedAt         DateTime   @updatedAt
+
+    gardens           Garden[]
+    followers         Follower[] @relation("followers")
+    followed          Follower[] @relation("followed")
+    seeds             Seed[]
+    externalAuthAssociations  SocialLogin[]
+psl=}
+
+entity SocialLogin {=psl
+    id          Int       @id @default(autoincrement())
+    provider    String
+    providerId  String
+    user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId      Int
+    createdAt   DateTime  @default(now())
+    @@unique([provider, providerId, userId])
+psl=}
+
+entity Garden {=psl
+    id              String    @id @default(uuid())
+    name            String
+    userId          Int       @unique
+    createdAt       DateTime  @default(now())
+    updatedAt       DateTime  @updatedAt
+
+    user       User     @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    plants      Plant[]
+psl=}
+
+entity Plant {=psl
+    id              String    @id @default(uuid())
+    seedId          String   
+    gardenId        String    @unique
+    plantDate       DateTime
+    stage           String     @default("SEED")
+    createdAt       DateTime   @default(now())
+    updatedAt       DateTime   @updatedAt
+    seed            Seed       @relation(fields: [seedId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    garden          Garden     @relation(fields: [gardenId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+psl=}
+
+entity Seed {=psl
+    id               String    @id @default(uuid())
+    title            String
+    scientificName   String
+    image            String
+    summary          String
+    daysToSprout     Int?
+    daysToMaturity   Int?
+    heightToMaturity Int?
+    rowSpacing       Int?
+    plantSpacing     Int?
+    plantingDepth    Float?
+    description      String?
+    howToGrow        String?
+    company          String?
+    userId           Int        @unique
+    createdAt        DateTime   @default(now())
+    updatedAt        DateTime   @updatedAt
+    user             User       @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+    plants           Plant[]
+psl=}
+
+entity Follower {=psl
+  id         Int        @id @default(autoincrement())
+  userId     Int
+  followerId Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now()) @updatedAt
+  user       User     @relation("followers", fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  follower   User     @relation("followed", fields: [followerId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@unique([userId, followerId])
+  @@map("Followers")
+psl=}
+
+// Queries //
+
+query getUsers {
+  fn: import { getUsers } from "@server/queries.js",
+
+  entities: [User]
+}
+
+query getGardens {
+  fn: import { getGardens } from "@server/queries.js",
+
+  entities: [Garden]
+}
+
+// Actions // 
+
