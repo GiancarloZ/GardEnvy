@@ -1,14 +1,16 @@
 import React from "react";
+import { Global, css } from "@emotion/react";
 import styled from "@emotion/styled";
+
+import { NotificationsProvider, setUpNotifications } from "reapop";
+import { ThemeProvider } from "@emotion/react";
+import { theme } from "./theme";
+
+// Components
 import { Header } from "./components/Header";
-import { MainMenu } from "./components/MainMenu";
-import "./root.css";
 
-const Wrapper = styled.div`
-  width: 100%;
-  position: relative;
-  background-color: #e2b411;
-
+// Styles
+const styles = css`
   @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap");
 
   * {
@@ -19,7 +21,7 @@ const Wrapper = styled.div`
 
   html,
   body {
-    background: #e2b411;
+    background: ${theme.colors.base3};
     font-size: 16px;
     margin: 0;
     padding: 0;
@@ -28,7 +30,7 @@ const Wrapper = styled.div`
     color: white;
   }
 
-  #app {
+  #root {
     width: 100%;
     height: 100%;
   }
@@ -56,19 +58,23 @@ const Wrapper = styled.div`
   }
 
   ::-webkit-scrollbar-track {
-    background-color: #333333;
+    background-color: ${theme.colors.base3};
   }
 
   ::-webkit-scrollbar-thumb {
-    background-color: #e2b411;
+    background-color: ${theme.colors.base6};
     border-radius: 20px;
     border: 6px solid transparent;
     background-clip: content-box;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background-color: #e2b411;
+    background-color: ${theme.colors.base1};
   }
+`;
+const Wrapper = styled.div`
+  width: 100%;
+  position: relative;
 `;
 
 const ContentContainer = styled.div`
@@ -86,12 +92,14 @@ const FlexWrapper = styled.div`
 
 export default function Root({ children }) {
   return (
-    <Wrapper>
-      <Header />
-      <FlexWrapper>
-        <MainMenu />
-        <ContentContainer>{children}</ContentContainer>
-      </FlexWrapper>
-    </Wrapper>
+    <ThemeProvider theme={theme}>
+      <Global styles={styles} />
+      <Wrapper>
+        <Header />
+        <FlexWrapper>
+          <ContentContainer>{children}</ContentContainer>
+        </FlexWrapper>
+      </Wrapper>
+    </ThemeProvider>
   );
 }

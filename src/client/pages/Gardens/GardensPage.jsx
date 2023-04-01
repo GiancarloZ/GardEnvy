@@ -1,5 +1,5 @@
 import React from "react";
-import getGardens from "@wasp/queries/getGardens";
+import fetchAllGardens from "@wasp/queries/fetchAllGardens";
 import { useQuery } from "@wasp/queries";
 
 // Components
@@ -11,35 +11,20 @@ import { Wrapper } from "./styled";
 
 export default function GardensPage() {
   const [open, setOpen] = React.useState(false);
-  const { data: gardens, isFetching, error } = useQuery(getGardens);
-  const [mounted, setMounted] = React.useState(false);
 
-  React.useEffect(() => {
-    if (open) {
-      setMounted(true);
-    } else {
-      setTimeout(() => {
-        setMounted(false);
-      }, 500);
-    }
-  }, [open]);
+  const { data: gardens, isFetching, error } = useQuery(fetchAllGardens);
+
   console.log(open, "open");
   console.log(gardens, "gardens");
   return (
     <Wrapper>
       <FloatingAddGarden onClick={() => setOpen((o) => !o)} />
-      {gardens?.length > 0 ? (
-        <GardenCard />
-      ) : (
-        <div>There are no gardens :'(</div>
-      )}
-      {isFetching && <div>...loading</div>}
+      {gardens?.length > 0 &&
+        gardens.map((garden) => <GardenCard garden={garden} />)}
+      {!gardens?.length && isFetching && <div>...loading</div>}
+      {!gardens?.length && !isFetching && <div>There are no gardens :' </div>}
       {error && <div>{error?.message}</div>}
-      <AddGardenModal
-        open={open}
-        closeModal={() => setOpen((o) => !o)}
-        mounted={mounted}
-      />
+      <AddGardenModal open={open} closeModal={() => setOpen((o) => !o)} />
     </Wrapper>
   );
 }

@@ -27,6 +27,7 @@ CREATE TABLE "SocialLogin" (
 CREATE TABLE "Garden" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "name" TEXT NOT NULL,
+    "image" TEXT,
     "userId" INTEGER NOT NULL,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" DATETIME NOT NULL,
@@ -89,13 +90,7 @@ CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 CREATE UNIQUE INDEX "SocialLogin_provider_providerId_userId_key" ON "SocialLogin"("provider", "providerId", "userId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Garden_userId_key" ON "Garden"("userId");
-
--- CreateIndex
 CREATE UNIQUE INDEX "Plant_gardenId_key" ON "Plant"("gardenId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Seed_userId_key" ON "Seed"("userId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Followers_userId_followerId_key" ON "Followers"("userId", "followerId");

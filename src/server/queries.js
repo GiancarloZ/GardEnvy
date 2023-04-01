@@ -1,9 +1,9 @@
 import HttpError from "@wasp/core/HttpError.js";
 
-export const getUsers = async (args, context) => {
+export const fetchAllUsers = async (args, context) => {
   return context.entities.User.findMany({});
 };
 
-export const getGardens = async (args, context) => {
+export const fetchAllGardens = async (args, context) => {
   return context.entities.Garden.findMany({});
 };

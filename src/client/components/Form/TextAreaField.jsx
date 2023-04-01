@@ -5,15 +5,15 @@ const FormControl = styled.div`
   margin: 12px 0;
 `;
 
-const Input = styled.input`
+const Input = styled.textarea`
   background: #e2b411;
   border: 0;
   border-bottom: 2px solid #333;
-  padding: 15px 0 6px 0;
   display: block;
   font-size: 18px;
   width: 100%;
   transition: 0.1s ease-in;
+  padding: 15px 0 0 0;
 
   &:focus,
   &:valid {
@@ -24,13 +24,13 @@ const Input = styled.input`
   &:focus + label span,
   &:valid + label span {
     color: #777777;
-    transform: translateY(-30px) scale(0.8) translateX(-9px);
+    transform: translateY(-30px) scale(0.8) translateX(-15px);
   }
 `;
 
 const Label = styled.label`
   position: absolute;
-  top: 15px;
+  bottom: 15px;
   left: 0;
   pointer-events: none;
 `;
@@ -43,7 +43,7 @@ const Span = styled.span`
   color: #111111;
 `;
 
-export const FormInput = ({ label, type = "text", onChange, ...props }) => {
+export const FormTextArea = ({ label, type = "text", onChange, ...props }) => {
   return (
     <FormControl>
       <Input type={type} onChange={onChange} {...props} />

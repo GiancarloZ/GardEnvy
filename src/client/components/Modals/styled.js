@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { keyframes } from "@emotion/react";
+import { Link } from "react-router-dom";
 
 const fadeIn = keyframes`
   0% {
@@ -20,90 +21,144 @@ const fadeOut = keyframes`
 `;
 
 const scaleUp = keyframes`
-  0% {
-    transform:scale(.8) translateY(1000px);
-    opacity:0;
+  from {
+    transform: translateY(110vh);
   }
-  100% {
-    transform:scale(1) translateY(0px);
-    opacity:1;
+  to {
+    transform: translateY(0%);
   }
 `;
 
 const scaleDown = keyframes`
-  0% {
-    transform:scale(1) translateY(0px);
-    opacity:1;
+  from {
+    transform: translateY(0%);
   }
-  100% {
-    transform:scale(.8) translateY(1000px);
-    opacity:0;
+  to {
+    transform: translateY(110vh);
   }
 `;
 
 const slideIn = keyframes`
   from {
     transform: translateX(-100%);
-    opacity: 0;
   }
   to {
     transform: translateX(0%);
-    opacity: 1;
+
   }
 `;
 
-/* Define keyframes for the slideOut animation */
 const slideOut = keyframes`
   from {
     transform: translateX(0%);
-    opacity: 1;
   }
   to {
     transform: translateX(-100%);
-    opacity: 0;
   }
 `;
 
 export const ModalScaleContainer = styled.div`
   position: fixed;
-  display: table;
-  height: 100%;
-  width: 100%;
-  top: 0;
   left: 0;
+  right: 0;
+  margin: auto;
+  top: 72px;
   z-index: 1;
-  transform: scale(0.5);
-  opacity: 0;
+  transform: translateY(110vh);
   animation: ${(props) => props.mounted && (props.open ? scaleUp : scaleDown)}
-    0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+    0.5s cubic-bezier(0.1, 0.25, 0.25, 1) forwards;
 `;
 
 export const ModalSlideContainer = styled.div`
   position: fixed;
-  display: table;
   height: 100vh;
-  width: 280px;
+  width: 228px;
+  top: 0;
+  left: 0;
+  z-index: 201;
+  transform: translateX(-100%);
+  animation: ${(props) => props.mounted && (props.open ? slideIn : slideOut)}
+    0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+`;
+
+export const ModalCameraContainer = styled.div`
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
   top: 0;
   left: 0;
   z-index: 1;
-  transform: translateX(0%);
+  transform: translateX(-100%);
   opacity: 1;
-  animation: ${(props) => (props.open ? slideIn : slideOut)} 0.5s
-    cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+  animation: ${(props) => props.mounted && (props.open ? slideIn : slideOut)}
+    0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 `;
 
 export const ModalBackground = styled.div`
-  display: table-cell;
-  background: ${({ bg }) => bg || "rgba(0, 0, 0, 0.8)"};
-  text-align: center;
-  vertical-align: middle;
+  background: ${({ bg }) => bg || "#e2b411"};
+  padding: ${({ padding }) => padding};
+  vertical-align: ${({ align }) => align || "middle"};
+  text-align: ${({ ta }) => ta};
+  position: relative;
+  height: 100%;
+
+  @media (min-width: 786px) {
+    padding: ${({ paddingM }) => paddingM};
+  }
 `;
 
 export const Modal = styled.div`
   background: #e2b411;
-  padding: 50px;
-  display: inline-block;
+  max-width: 350px;
   border-radius: 3px;
   font-weight: 300;
   position: relative;
+  padding: 12px;
+  margin-top: 72px;
+  margin: auto;
+
+  @media (min-width: 768px) {
+    padding: 24px;
+  }
+`;
+
+export const NavItem = styled(Link)`
+  padding: 12px;
+  &:hover {
+    background: #7b9600;
+  }
+  text-decoration: none;
+`;
+
+export const ItemWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+`;
+
+export const Label = styled.label`
+  text-align: center;
+  font-size: 24px;
+`;
+
+export const IconWrapper = styled.div`
+  cursor: pointer;
+  border: 1px solid #ffffff;
+`;
+
+export const ButtonWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+`;
+
+export const PhotoWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 24px;
+`;
+
+export const ImageWrapper = styled.div`
+  padding-bottom: 177.778%;
+  width: 100%;
 `;

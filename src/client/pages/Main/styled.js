@@ -29,6 +29,7 @@ export const ButtonWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 24px;
 `;
 
 export const PlantButton = styled(Link)`

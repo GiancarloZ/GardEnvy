@@ -1,4 +1,4 @@
-import getUsers from "@wasp/queries/getUsers";
+import fetchAllUsers from "@wasp/queries/fetchAllUsers";
 import { useQuery } from "@wasp/queries";
 
 // Styles
@@ -12,7 +12,7 @@ import {
 } from "./styled";
 
 const MainPage = ({ user }) => {
-  const { data: users, isFetching, error } = useQuery(getUsers);
+  const { data: users, isFetching, error } = useQuery(fetchAllUsers);
 
   return (
     <Wrapper>

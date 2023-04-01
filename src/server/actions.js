@@ -1,9 +1,9 @@
 import HttpError from "@wasp/core/HttpError.js";
+import AuthError from "@wasp/core/AuthError.js";
 
 export const signUp = async (args, context) => {
   // Your custom code before sign-up.
   // ...
-  console.log(args, context, "ARGS AND CONTEXT");
   const newUser = context.entities.User.create({
     data: {
       username: args.username,
@@ -16,13 +16,16 @@ export const signUp = async (args, context) => {
 };
 
 export const createGarden = async (args, context) => {
+  console.log(context.user.id);
   if (!context.user) {
-    throw new HttpError(401);
+    throw new HttpError(422, "User must be signed in!", {
+      message: "Only users can create gardens!",
+    });
   }
   return context.entities.Garden.create({
     data: {
       ...args,
-      userId: { connect: { id: context.user.id } },
+      userId: context.user.id,
     },
   });
 };

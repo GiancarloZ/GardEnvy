@@ -1,10 +1,10 @@
 import React from "react";
+import Button from "../Button";
 
 // Styled
 import {
   CardWrapper,
   CardFrame,
-  SectionWrapper,
   CardImage,
   HeaderTitle,
   InfoWrapper,
@@ -14,29 +14,27 @@ import {
 export function GardenCard({ garden }) {
   return (
     <CardWrapper>
-      <HeaderTitle>{garden.title}</HeaderTitle>
-      <SectionWrapper>
-        <CardFrame>
-          <CardImage src={garden.image} />
-        </CardFrame>
-        <div>
-          <InfoWrapper>
-            <StageItem>
-              Seed Stage <>16</>
-            </StageItem>
-            <StageItem>
-              Sprout Stage <>16</>
-            </StageItem>
-            <StageItem>
-              Seedling Stage <>16</>
-            </StageItem>
-            <StageItem>
-              Maturity Stage <>16</>
-            </StageItem>
-          </InfoWrapper>
-          <Button>Enter Garden</Button>
-        </div>
-      </SectionWrapper>
+      <HeaderTitle>{garden?.name}</HeaderTitle>
+      <CardFrame>
+        <CardImage src={garden?.image} />
+      </CardFrame>
+      <InfoWrapper>
+        <StageItem>
+          Seed Stage <>16</>
+        </StageItem>
+        <StageItem>
+          Sprout Stage <>16</>
+        </StageItem>
+        <StageItem>
+          Seedling Stage <>16</>
+        </StageItem>
+        <StageItem>
+          Maturity Stage <>16</>
+        </StageItem>
+      </InfoWrapper>
+      <Button type="button" active>
+        Enter Garden
+      </Button>
     </CardWrapper>
   );
 }

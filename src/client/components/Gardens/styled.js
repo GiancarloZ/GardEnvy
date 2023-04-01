@@ -3,18 +3,13 @@ import styled from "@emotion/styled";
 export const CardWrapper = styled.div`
   padding: 12px;
   display: flex;
-  flex-directoin: column;
+  flex-direction: column;
+  background: ${({ theme }) => theme.colors.base6};
+  border-radius: 24px;
+  text-align: center;
 
   @media (min-width: 768px) {
     padding: 24px;
-  }
-`;
-
-export const SectionWrapper = styled.div`
-  display: flex;
-
-  @media (min-width: 768px) {
-    flex-direction: column;
   }
 `;
 
@@ -22,7 +17,7 @@ export const CardFrame = styled.div`
   display: block;
   width: 100%;
   position: relative;
-  overflow: hidden;
+
   border-radius: 12px;
   filter: drop-shadow(0px 8px 7px rgba(0, 0, 0, 0.25))
     drop-shadow(0px 3.34221px 2.92443px rgba(0, 0, 0, 0.179714))
@@ -37,6 +32,7 @@ export const CardImage = styled.img`
   position: relative;
   width: 100%;
   border-radius: 12px;
+
   img,
   video,
   div {
@@ -76,7 +72,7 @@ export const StageItem = styled.div`
 // FloatingAddGarden
 
 export const FloatingButtonWrapper = styled.button`
-  position: absolute;
+  position: fixed;
   bottom: 12px;
   right: 12px;
   border-radius: 100px;
@@ -85,4 +81,9 @@ export const FloatingButtonWrapper = styled.button`
   height: 75px;
   cursor: pointer;
   border: 0;
+
+  &:hover {
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3);
+    transform: scale(0.9);
+  }
 `;
