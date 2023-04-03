@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "../Button";
+import { Image } from "@emotion-icons/ionicons-outline";
 
 // Styled
 import {
@@ -9,6 +10,7 @@ import {
   HeaderTitle,
   InfoWrapper,
   StageItem,
+  ButtonWrapper,
 } from "./styled";
 
 export function GardenCard({ garden }) {
@@ -16,7 +18,9 @@ export function GardenCard({ garden }) {
     <CardWrapper>
       <HeaderTitle>{garden?.name}</HeaderTitle>
       <CardFrame>
-        <CardImage src={garden?.image} />
+        <CardImage>
+          <Image />
+        </CardImage>
       </CardFrame>
       <InfoWrapper>
         <StageItem>
@@ -32,9 +36,11 @@ export function GardenCard({ garden }) {
           Maturity Stage <>16</>
         </StageItem>
       </InfoWrapper>
-      <Button type="button" active>
-        Enter Garden
-      </Button>
+      <ButtonWrapper>
+        <Button type="button" active>
+          Enter Garden
+        </Button>
+      </ButtonWrapper>
     </CardWrapper>
   );
 }

@@ -10,6 +10,7 @@ const Wrapper = styled.button`
   color: #fff;
   font-size: 16px;
   font-weight: bold;
+  width: 100%;
   padding: 12px;
   cursor: ${({ disabled }) => (disabled ? "auto" : "pointer")};
   display: flex;

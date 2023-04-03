@@ -1,0 +1,71 @@
+# flyctl launch added from .gitignore
+.wasp
+.env.server
+.env.client
+
+# flyctl launch added from .wasp/build/server/.gitignore
+.wasp/build/server/**/node_modules
+
+.wasp/build/server/**/npm-debug.log
+.wasp/build/server/**/*.log
+
+.wasp/build/server/**/.env
+
+# flyctl launch added from .wasp/build/web-app/.gitignore
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+.wasp/build/web-app/node_modules
+.wasp/build/web-app/.pnp
+.wasp/build/web-app/**/.pnp.js
+
+# testing
+.wasp/build/web-app/coverage
+
+# production
+.wasp/build/web-app/build
+
+# misc
+.wasp/build/web-app/**/.DS_Store
+.wasp/build/web-app/**/.env.local
+.wasp/build/web-app/**/.env.development.local
+.wasp/build/web-app/**/.env.test.local
+.wasp/build/web-app/**/.env.production.local
+
+.wasp/build/web-app/**/npm-debug.log*
+.wasp/build/web-app/**/yarn-debug.log*
+.wasp/build/web-app/**/yarn-error.log*
+
+# flyctl launch added from .wasp/out/server/.gitignore
+.wasp/out/server/**/node_modules
+
+.wasp/out/server/**/npm-debug.log
+.wasp/out/server/**/*.log
+
+.wasp/out/server/**/.env
+
+# flyctl launch added from .wasp/out/web-app/.gitignore
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+.wasp/out/web-app/node_modules
+.wasp/out/web-app/.pnp
+.wasp/out/web-app/**/.pnp.js
+
+# testing
+.wasp/out/web-app/coverage
+
+# production
+.wasp/out/web-app/build
+
+# misc
+.wasp/out/web-app/**/.DS_Store
+.wasp/out/web-app/**/.env.local
+.wasp/out/web-app/**/.env.development.local
+.wasp/out/web-app/**/.env.test.local
+.wasp/out/web-app/**/.env.production.local
+
+.wasp/out/web-app/**/npm-debug.log*
+.wasp/out/web-app/**/yarn-debug.log*
+.wasp/out/web-app/**/yarn-error.log*
+fly.toml

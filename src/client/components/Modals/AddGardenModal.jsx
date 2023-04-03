@@ -35,7 +35,6 @@ export const AddGardenModal = ({ open, closeModal }) => {
       })
       .catch((e) => {
         toastRef.current.sendMessage({ message: e.message, status: "error" });
-        setShowToast(true);
       });
   };
 
@@ -66,12 +65,13 @@ export const AddGardenModal = ({ open, closeModal }) => {
                 required
               />
               <PhotoWrapper>
-                <>
-                  <ImageWrapper>
-                    <img src={image} />
-                  </ImageWrapper>
-                </>
-
+                {image && (
+                  <>
+                    <ImageWrapper>
+                      <img src={image} />
+                    </ImageWrapper>
+                  </>
+                )}
                 <IconWrapper
                   type="button"
                   onClick={() => setOpenCamera((o) => !o)}

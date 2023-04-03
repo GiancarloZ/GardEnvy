@@ -8,42 +8,9 @@ import React, {
 import { keyframes } from "@emotion/react";
 import styled from "@emotion/styled";
 
-const ToastSlideIn = keyframes`
-  0% {
-    opacity: 0;
-    transform: translateY(-100%);
-  }
-  10% {
-    opacity: 0.5;
-    transform: translateY(0);
-  }
-  50% {
-    opacity: 1;
-  }
-  90% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(100%);
-  }
-`;
-const ToastSlideOut = keyframes`
-  0% {
-    transform: translateY(-100%);
-  }
-  10% {
-    transform: translateY(0);
-  }
-  90% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(100%);
-  }
-`;
 const slideIn = keyframes`
   from {
-    transform: translateY(-100%);
+    transform: translateY(110vh);
     opacity: 0;
   }
   to {
@@ -58,46 +25,54 @@ const slideOut = keyframes`
     opacity: 1;
   }
   to {
-    transform: translateY(-100%);
+    transform: translateY(110vh);
     opacity: 0;
   }
 `;
-const scaleUp = keyframes`
+const toastIn = keyframes`
   0% {
-    transform:scale(.8) translateY(1000px);
-    opacity:0;
+    opacity: 0;
+    transform: translateY(110vh) scale(0.5);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(50vh) scale(1.05);
   }
   100% {
-    transform:scale(1) translateY(0px);
-    opacity:1;
+    opacity: 1;
+    transform: translateY(0%) scale(1);
   }
 `;
 
-const scaleDown = keyframes`
+const toastOut = keyframes`
   0% {
-    transform:scale(1) translateY(0px);
-    opacity:1;
+    opacity: 1;
+    transform: translateY(0%) scale(1);
+  }
+  40% {
+    opacity: 0.5;
+    transform: translateY(50vh) scale(0.95);
   }
   100% {
-    transform:scale(.8) translateY(1000px);
-    opacity:0;
+    opacity: 0;
+    transform: translateY(110vh) scale(0.5);
   }
 `;
 
 const ToastWrapper = styled.div`
   position: fixed;
-  bottom: 20px;
+  bottom: 30px;
   left: 15px;
   z-index: 999;
-  transform: translateX(0%);
-  opacity: 1;
-  animation: ${(props) => (props.mounted && props.open ? slideIn : slideOut)}
-    1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+  transform: translateY(110vh);
+  opacity: 0;
+  animation: ${(props) => (props.mounted && props.open ? toastIn : toastOut)}
+    0.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
 `;
 
 const ToastContainer = styled.div`
-  background-color: ${({ status }) =>
-    status === "error" ? "rgb(145, 0, 72)" : "#1E960B"};
+  background-color: ${({ theme, status }) =>
+    status === "error" ? "rgb(145, 0, 72)" : theme.colors.base1};
   color: #fff;
   padding: 10px 20px;
   border-radius: 5px;
@@ -107,9 +82,17 @@ const Toast = forwardRef((props, ref) => {
   const [open, setOpen] = React.useState(false);
   const [details, setDetails] = React.useState("");
   const [status, setStatus] = React.useState("");
+  const [mounted, setMounted] = React.useState(false);
 
   React.useEffect(() => {
-    open && setTimeout(() => setOpen(false), 3000);
+    if (open) {
+      setMounted(true);
+      setTimeout(() => setOpen(false), 3000);
+    } else {
+      setTimeout(() => {
+        setMounted(false);
+      }, 500);
+    }
   }, [open]);
 
   useImperativeHandle(ref, () => ({
@@ -120,7 +103,7 @@ const Toast = forwardRef((props, ref) => {
     },
   }));
   return (
-    <ToastWrapper open={open}>
+    <ToastWrapper open={open} mounted={mounted}>
       <ToastContainer status={status}>{details}</ToastContainer>
     </ToastWrapper>
   );

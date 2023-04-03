@@ -8,11 +8,11 @@ export const Wrapper = styled.div`
   gap: 12px;
 
   * {
-    @media (min-width: 500px) {
-      flex-basis: calc(${(1 / 2) * 100}% - 12px);
+    @media (min-width: 580px) {
+      flex-basis: calc(${(1 / 2) * 100}% - 6px);
     }
-    @media (min-width: 768px) {
-      flex-basis: calc(${(1 / 3) * 100}% - 16px);
+    @media (min-width: 1024px) {
+      flex-basis: calc(${(1 / 3) * 100}% - 8px);
     }
     @media (min-width: 1440px) {
       flex-basis: calc(${(1 / 4) * 100}% - 18px);
@@ -20,8 +20,11 @@ export const Wrapper = styled.div`
   }
 
   @media (min-width: 500px) {
-    padding: 24px;
     flex-direction: row;
+  }
+
+  @media (min-width: 1440px) {
+    padding: 24px;
     gap: 24px;
   }
 `;

@@ -22,19 +22,19 @@ const fadeOut = keyframes`
 
 const scaleUp = keyframes`
   from {
-    transform: translateY(110vh);
+    transform: translateX(100%);
   }
   to {
-    transform: translateY(0%);
+    transform: translateX(0%);
   }
 `;
 
 const scaleDown = keyframes`
   from {
-    transform: translateY(0%);
+    transform: translateX(0%);
   }
   to {
-    transform: translateY(110vh);
+    transform: translateX(100%);
   }
 `;
 
@@ -64,7 +64,7 @@ export const ModalScaleContainer = styled.div`
   margin: auto;
   top: 72px;
   z-index: 1;
-  transform: translateY(110vh);
+  transform: translateX(100%);
   animation: ${(props) => props.mounted && (props.open ? scaleUp : scaleDown)}
     0.5s cubic-bezier(0.1, 0.25, 0.25, 1) forwards;
 `;

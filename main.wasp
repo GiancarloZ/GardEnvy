@@ -5,6 +5,8 @@ app GardEnvy {
 
   title: "GardEnvy",
 
+  db: { system: PostgreSQL },
+
   auth: {
       userEntity: User,
       externalAuthEntity: SocialLogin,
